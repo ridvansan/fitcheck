@@ -24,7 +24,7 @@ class ScaleAutomator:
         
         # 3. AI İstemcisi
         self.client = genai.Client(api_key=self.config.get("GEMINI_API_KEY"))
-        self.model_id = self.config.get("MODEL_ID", "gemini-2.0-flash")
+        self.model_id = self.config.get("MODEL_ID", "gemini-2.5-flash")
         
         # 4. Google Sheets Bağlantısı
         # Bu fonksiyon artık içeride self.creds_path kullanacak
