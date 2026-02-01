@@ -1,0 +1,18 @@
+# AI ve Görüntü İşleme
+google-genai
+Pillow
+
+# Google Servisleri Entegrasyonu
+gspread
+oauth2client
+
+# Veri Analizi ve Excel İşlemleri
+pandas
+openpyxl
+
+# Raporlama ve Görselleştirme
+matplotlib
+fpdf2
+
+# API İstekleri (Concept2 vb.)
+requests

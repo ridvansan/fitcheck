@@ -1,0 +1,4 @@
+.venv/
+archive/
+google_creds.json
+secrets.json
