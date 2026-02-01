@@ -10,22 +10,29 @@ from google import genai
 from google.genai import types
 
 class ScaleAutomator:
-    def __init__(self, config_file='secrets.json', creds_file='google_creds.json', sheet_name='Scale_Reports'):
-        # 1. Konfigürasyon ve Kimlik Bilgileri
-        self.config = self._load_json(config_file)
-        self.creds_file = creds_file
+    def __init__(self, config_file='secrets.json', creds_file='google-creds.json', sheet_name='FitCheck_Reports'):
+        # 1. Scriptin bulunduğu klasörün tam yolunu otomatik bul
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        # 2. Dosya yollarını tam yol (absolute path) olarak sabitle
+        self.config_path = os.path.join(self.base_dir, config_file)
+        self.creds_path = os.path.join(self.base_dir, creds_file) # google-creds.json olarak güncellendi
+        self.archive_dir = os.path.join(self.base_dir, 'archive/scale_results')
+        
         self.sheet_name = sheet_name
-        self.archive_dir = 'archive/scale_results'
         
-        # 2. AI İstemcisi
+        # Dosyayı tam yol üzerinden yükle
+        self.config = self._load_json(self.config_path)
+        
+        # 3. AI İstemcisi (Model ID gemini-2.0-flash olarak güncellendi)
         self.client = genai.Client(api_key=self.config.get("GEMINI_API_KEY"))
-        self.model_id = self.config.get("MODEL_ID", "gemini-2.5-flash")
+        self.model_id = self.config.get("MODEL_ID", "gemini-2.0-flash")
         
-        # 3. Google Sheets Bağlantısı
+        # 4. Google Sheets Bağlantısı
         self.sheet = self._setup_sheets()
         
         if not os.path.exists(self.archive_dir):
-            os.makedirs(self.archive_dir)
+            os.makedirs(self.archive_dir, exist_ok=True)
 
     def _load_json(self, file_name):
         with open(file_name, 'r') as f:
